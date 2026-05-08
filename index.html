@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WESTLIFE QUEUE ROOM 2027</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+:root{
+--gold:#ffcb73;
+--gold2:#ff8c00;
+--dark:#050505;
+--white:#ffffff;
+}
+
+body{
+background:#000;
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+color:#fff;
+height:100vh;
+position:relative;
+}
+
+/* BACKGROUND */
+.bg{
+position:absolute;
+inset:0;
+background:
+linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.9)),
+url('queue-bg.jpg');
+background-size:cover;
+background-position:center;
+animation:bgZoom 18s ease-in-out infinite alternate;
+z-index:-3;
+}
+
+@keyframes bgZoom{
+from{
+transform:scale(1);
+}
+to{
+transform:scale(1.08);
+}
+}
+
+/* PARTICLES */
+.particles{
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:-2;
+}
+
+.particles span{
+position:absolute;
+width:4px;
+height:4px;
+background:rgba(255,180,0,.9);
+border-radius:50%;
+animation:particles 14s linear infinite;
+}
+
+@keyframes particles{
+0%{
+transform:translateY(100vh) scale(0);
+opacity:0;
+}
+10%{
+opacity:1;
+}
+100%{
+transform:translateY(-10vh) scale(1.7);
+opacity:0;
+}
+}
+
+/* GLOW */
+.glow{
+position:absolute;
+border-radius:50%;
+filter:blur(100px);
+opacity:.4;
+z-index:-1;
+}
+
+.glow.one{
+width:300px;
+height:300px;
+background:orange;
+top:-50px;
+left:-50px;
+}
+
+.glow.two{
+width:250px;
+height:250px;
+background:red;
+bottom:-50px;
+right:-50px;
+}
+
+/* MAIN */
+.main{
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.queue-box{
+width:100%;
+max-width:850px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.1);
+border-radius:40px;
+padding:60px 50px;
+text-align:center;
+box-shadow:0 25px 80px rgba(0,0,0,.7);
+animation:fadeUp 1.2s ease;
+position:relative;
+overflow:hidden;
+}
+
+.queue-box::before{
+content:'';
+position:absolute;
+width:200%;
+height:200%;
+background:linear-gradient(45deg,transparent,rgba(255,200,0,.12),transparent);
+top:-50%;
+left:-50%;
+animation:shine 8s linear infinite;
+}
+
+@keyframes shine{
+100%{
+transform:translateX(100%);
+}
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(80px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.logo{
+font-family:'Cinzel',serif;
+font-size:32px;
+font-weight:900;
+letter-spacing:4px;
+color:var(--gold);
+margin-bottom:20px;
+text-shadow:0 0 15px rgba(255,180,0,.5);
+}
+
+.queue-title{
+font-family:'Cinzel',serif;
+font-size:58px;
+line-height:1.1;
+margin-bottom:25px;
+background:linear-gradient(to bottom,#fff,var(--gold));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-shadow:0 0 30px rgba(255,180,0,.3);
+}
+
+.queue-sub{
+font-size:18px;
+line-height:1.9;
+color:#ddd;
+max-width:650px;
+margin:auto;
+margin-bottom:40px;
+}
+
+/* QUEUE NUMBER */
+.queue-number{
+font-size:95px;
+font-weight:800;
+color:var(--gold);
+text-shadow:
+0 0 10px rgba(255,180,0,.7),
+0 0 25px rgba(255,180,0,.6),
+0 0 50px rgba(255,180,0,.5);
+animation:pulse 2s infinite;
+margin-bottom:15px;
+}
+
+@keyframes pulse{
+0%{
+transform:scale(1);
+}
+50%{
+transform:scale(1.05);
+}
+100%{
+transform:scale(1);
+}
+}
+
+.queue-label{
+font-size:18px;
+letter-spacing:5px;
+color:#ccc;
+margin-bottom:40px;
+}
+
+/* PROGRESS */
+.progress-area{
+margin-bottom:35px;
+}
+
+.progress-text{
+display:flex;
+justify-content:space-between;
+margin-bottom:12px;
+font-size:15px;
+color:#ccc;
+}
+
+.progress{
+width:100%;
+height:18px;
+background:rgba(255,255,255,.08);
+border-radius:50px;
+overflow:hidden;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+border-radius:50px;
+background:linear-gradient(to right,var(--gold),var(--gold2));
+box-shadow:0 0 20px rgba(255,180,0,.6);
+animation:load 20s linear forwards;
+}
+
+@keyframes load{
+0%{
+width:0%;
+}
+100%{
+width:100%;
+}
+}
+
+/* STATUS */
+.status{
+margin-top:35px;
+font-size:18px;
+color:#ddd;
+line-height:1.8;
+}
+
+.status span{
+color:var(--gold);
+font-weight:700;
+}
+
+/* TIMER */
+.timer{
+margin-top:35px;
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.time-box{
+width:130px;
+height:130px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.1);
+border-radius:25px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+backdrop-filter:blur(10px);
+transition:.4s;
+}
+
+.time-box:hover{
+transform:translateY(-8px) scale(1.05);
+border-color:var(--gold);
+}
+
+.time-box h3{
+font-size:40px;
+color:var(--gold);
+}
+
+.time-box span{
+margin-top:8px;
+letter-spacing:3px;
+font-size:13px;
+color:#ccc;
+}
+
+/* BUTTON */
+.enter-btn{
+margin-top:45px;
+padding:18px 50px;
+border:none;
+border-radius:60px;
+font-size:17px;
+font-weight:700;
+cursor:pointer;
+background:linear-gradient(to right,var(--gold),var(--gold2));
+color:#000;
+transition:.4s;
+box-shadow:0 15px 40px rgba(255,180,0,.35);
+}
+
+.enter-btn:hover{
+transform:translateY(-5px) scale(1.05);
+box-shadow:0 20px 50px rgba(255,180,0,.5);
+}
+
+/* FOOTER */
+.footer{
+margin-top:40px;
+font-size:13px;
+color:#888;
+line-height:1.8;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+.queue-title{
+font-size:38px;
+}
+
+.queue-number{
+font-size:65px;
+}
+
+.queue-box{
+padding:45px 25px;
+}
+
+.time-box{
+width:110px;
+height:110px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<div class="particles" id="particles"></div>
+
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<div class="main">
+
+<div class="queue-box">
+
+<div class="logo">
+WESTLIFE 25
+</div>
+
+<h1 class="queue-title">
+THE ANNIVERSARY<br>
+WORLD TOUR
+</h1>
+
+<p class="queue-sub">
+You are now in the official waiting room for WESTLIFE WORLD TOUR 2027 Indonesia ticket sales.
+Please do not refresh or leave this page.
+</p>
+
+<div class="queue-number" id="queueNumber">
+#12874
+</div>
+
+<div class="queue-label">
+YOUR QUEUE NUMBER
+</div>
+
+<div class="progress-area">
+
+<div class="progress-text">
+<span>Queue Progress</span>
+<span id="progressPercent">0%</span>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+</div>
+
+<div class="status">
+Estimated waiting time:
+<span id="waitTime">12 Minutes</span>
+</div>
+
+<div class="timer">
+
+<div class="time-box">
+<h3 id="minutes">12</h3>
+<span>MINUTES</span>
+</div>
+
+<div class="time-box">
+<h3 id="seconds">00</h3>
+<span>SECONDS</span>
+</div>
+
+</div>
+
+<button class="enter-btn">
+WAITING FOR ACCESS
+</button>
+
+<div class="footer">
+© 2027 WESTLIFE THE ANNIVERSARY WORLD TOUR<br>
+Official Queue System — Please keep this tab open
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* PARTICLES */
+const particles = document.getElementById("particles");
+
+for(let i=0;i<160;i++){
+
+const span = document.createElement("span");
+
+span.style.left = Math.random()*100 + "vw";
+span.style.animationDuration = (Math.random()*10+5)+"s";
+span.style.animationDelay = Math.random()*5+"s";
+span.style.opacity = Math.random();
+
+particles.appendChild(span);
+
+}
+
+/* RANDOM QUEUE */
+document.getElementById("queueNumber").innerHTML =
+"#" + Math.floor(Math.random()*90000 + 10000);
+
+/* COUNTDOWN */
+let minutes = 12;
+let seconds = 0;
+
+const minEl = document.getElementById("minutes");
+const secEl = document.getElementById("seconds");
+
+setInterval(()=>{
+
+if(seconds == 0){
+
+if(minutes > 0){
+minutes--;
+seconds = 59;
+}
+
+}else{
+seconds--;
+}
+
+minEl.innerHTML = String(minutes).padStart(2,'0');
+secEl.innerHTML = String(seconds).padStart(2,'0');
+
+},1000);
+
+/* PROGRESS */
+let progress = 0;
+
+const progressText = document.getElementById("progressPercent");
+
+setInterval(()=>{
+
+if(progress < 100){
+
+progress++;
+
+progressText.innerHTML = progress + "%";
+
+}
+
+},200);
+
+/* NAV EFFECT */
+window.addEventListener("mousemove",(e)=>{
+
+const x = e.clientX / window.innerWidth;
+const y = e.clientY / window.innerHeight;
+
+document.querySelector(".glow.one").style.transform =
+`translate(${x*40}px,${y*40}px)`;
+
+document.querySelector(".glow.two").style.transform =
+`translate(-${x*40}px,-${y*40}px)`;
+
+});
+
+</script>
+
+</body>
+</html>
