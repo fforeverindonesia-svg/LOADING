@@ -15,36 +15,45 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-scroll-behavior:smooth;
 }
 
 :root{
---gold:#ffcb73;
+--gold:#ffcf73;
 --gold2:#ff8c00;
+--gold3:#ff5e00;
 --dark:#050505;
 --white:#ffffff;
 }
 
-body{
-background:#000;
-font-family:'Poppins',sans-serif;
+html,body{
+width:100%;
+height:100%;
 overflow:hidden;
+font-family:'Poppins',sans-serif;
+background:#000;
 color:#fff;
-height:100vh;
-position:relative;
 }
 
 /* BACKGROUND */
-.bg{
-position:absolute;
+
+body::before{
+content:'';
+position:fixed;
 inset:0;
 background:
-linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.9)),
-url('queue-bg.jpg');
-background-size:cover;
-background-position:center;
-animation:bgZoom 18s ease-in-out infinite alternate;
-z-index:-3;
+radial-gradient(circle at top left, rgba(255,140,0,.25), transparent 30%),
+radial-gradient(circle at bottom right, rgba(255,90,0,.2), transparent 30%),
+linear-gradient(to bottom, rgba(0,0,0,.5), rgba(0,0,0,.92));
+z-index:-5;
+}
+
+.bg{
+position:fixed;
+inset:0;
+background:url('queue-bg.jpg') center/cover no-repeat;
+filter:brightness(.45);
+animation:bgZoom 25s ease-in-out infinite alternate;
+z-index:-6;
 }
 
 @keyframes bgZoom{
@@ -52,101 +61,157 @@ from{
 transform:scale(1);
 }
 to{
-transform:scale(1.08);
+transform:scale(1.12);
 }
 }
 
-/* PARTICLES */
-.particles{
-position:absolute;
+/* STARS */
+
+.stars{
+position:fixed;
 width:100%;
 height:100%;
 overflow:hidden;
-z-index:-2;
+z-index:-4;
 }
 
-.particles span{
+.star{
 position:absolute;
-width:4px;
-height:4px;
-background:rgba(255,180,0,.9);
+width:2px;
+height:2px;
+background:white;
 border-radius:50%;
-animation:particles 14s linear infinite;
+animation:starMove linear infinite;
+opacity:.7;
 }
 
-@keyframes particles{
-0%{
-transform:translateY(100vh) scale(0);
+@keyframes starMove{
+from{
+transform:translateY(100vh);
 opacity:0;
 }
 10%{
 opacity:1;
 }
-100%{
-transform:translateY(-10vh) scale(1.7);
+to{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+/* PARTICLES */
+
+.particles{
+position:absolute;
+inset:0;
+overflow:hidden;
+z-index:-3;
+}
+
+.particles span{
+position:absolute;
+bottom:-20px;
+width:5px;
+height:5px;
+border-radius:50%;
+background:rgba(255,180,0,.8);
+box-shadow:0 0 15px rgba(255,180,0,.9);
+animation:particleMove linear infinite;
+}
+
+@keyframes particleMove{
+from{
+transform:translateY(0) scale(0);
+opacity:0;
+}
+10%{
+opacity:1;
+}
+to{
+transform:translateY(-120vh) scale(1.8);
 opacity:0;
 }
 }
 
 /* GLOW */
+
 .glow{
 position:absolute;
 border-radius:50%;
 filter:blur(100px);
-opacity:.4;
-z-index:-1;
+opacity:.35;
+z-index:-2;
+animation:floatGlow 8s ease-in-out infinite alternate;
 }
 
 .glow.one{
-width:300px;
-height:300px;
+width:400px;
+height:400px;
 background:orange;
-top:-50px;
-left:-50px;
+top:-100px;
+left:-100px;
 }
 
 .glow.two{
-width:250px;
-height:250px;
+width:350px;
+height:350px;
 background:red;
-bottom:-50px;
-right:-50px;
+bottom:-100px;
+right:-100px;
+}
+
+@keyframes floatGlow{
+from{
+transform:translate(0,0);
+}
+to{
+transform:translate(40px,40px);
+}
 }
 
 /* MAIN */
+
 .main{
 width:100%;
-height:100vh;
+height:100%;
 display:flex;
 justify-content:center;
 align-items:center;
 padding:20px;
+position:relative;
 }
 
 .queue-box{
 width:100%;
-max-width:850px;
-background:rgba(255,255,255,.05);
+max-width:920px;
+background:rgba(255,255,255,.06);
 backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,.1);
+border:1px solid rgba(255,255,255,.12);
 border-radius:40px;
 padding:60px 50px;
 text-align:center;
-box-shadow:0 25px 80px rgba(0,0,0,.7);
-animation:fadeUp 1.2s ease;
 position:relative;
 overflow:hidden;
+box-shadow:
+0 0 40px rgba(255,140,0,.25),
+0 0 120px rgba(0,0,0,.8);
+animation:fadeUp 1.2s ease;
 }
 
 .queue-box::before{
 content:'';
 position:absolute;
-width:200%;
-height:200%;
-background:linear-gradient(45deg,transparent,rgba(255,200,0,.12),transparent);
-top:-50%;
-left:-50%;
-animation:shine 8s linear infinite;
+width:250%;
+height:250%;
+background:linear-gradient(
+45deg,
+transparent,
+rgba(255,200,0,.12),
+transparent
+);
+top:-80%;
+left:-80%;
+animation:shine 10s linear infinite;
 }
 
 @keyframes shine{
@@ -166,69 +231,84 @@ transform:translateY(0);
 }
 }
 
+/* LOGO */
+
 .logo{
 font-family:'Cinzel',serif;
-font-size:32px;
+font-size:34px;
 font-weight:900;
-letter-spacing:4px;
+letter-spacing:6px;
+margin-bottom:25px;
 color:var(--gold);
-margin-bottom:20px;
-text-shadow:0 0 15px rgba(255,180,0,.5);
+text-shadow:
+0 0 10px rgba(255,180,0,.6),
+0 0 30px rgba(255,180,0,.4);
+animation:pulseLogo 3s infinite;
 }
+
+@keyframes pulseLogo{
+0%,100%{
+transform:scale(1);
+}
+50%{
+transform:scale(1.05);
+}
+}
+
+/* TITLE */
 
 .queue-title{
 font-family:'Cinzel',serif;
-font-size:58px;
-line-height:1.1;
+font-size:65px;
+line-height:1.05;
 margin-bottom:25px;
 background:linear-gradient(to bottom,#fff,var(--gold));
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-text-shadow:0 0 30px rgba(255,180,0,.3);
+text-shadow:0 0 40px rgba(255,180,0,.35);
 }
 
 .queue-sub{
 font-size:18px;
 line-height:1.9;
 color:#ddd;
-max-width:650px;
+max-width:700px;
 margin:auto;
 margin-bottom:40px;
 }
 
 /* QUEUE NUMBER */
+
 .queue-number{
-font-size:95px;
-font-weight:800;
+font-size:110px;
+font-weight:900;
 color:var(--gold);
+margin-bottom:10px;
 text-shadow:
-0 0 10px rgba(255,180,0,.7),
-0 0 25px rgba(255,180,0,.6),
-0 0 50px rgba(255,180,0,.5);
+0 0 15px rgba(255,180,0,.9),
+0 0 40px rgba(255,180,0,.7),
+0 0 80px rgba(255,180,0,.5);
 animation:pulse 2s infinite;
-margin-bottom:15px;
 }
 
 @keyframes pulse{
-0%{
+0%,100%{
 transform:scale(1);
 }
 50%{
 transform:scale(1.05);
 }
-100%{
-transform:scale(1);
-}
 }
 
 .queue-label{
-font-size:18px;
 letter-spacing:5px;
-color:#ccc;
+font-size:16px;
+color:#bbb;
 margin-bottom:40px;
 }
 
 /* PROGRESS */
+
 .progress-area{
 margin-bottom:35px;
 }
@@ -236,44 +316,65 @@ margin-bottom:35px;
 .progress-text{
 display:flex;
 justify-content:space-between;
-margin-bottom:12px;
-font-size:15px;
-color:#ccc;
+margin-bottom:14px;
+font-size:14px;
+color:#ddd;
 }
 
 .progress{
 width:100%;
-height:18px;
-background:rgba(255,255,255,.08);
+height:22px;
 border-radius:50px;
+background:rgba(255,255,255,.08);
 overflow:hidden;
 border:1px solid rgba(255,255,255,.08);
+position:relative;
 }
 
 .progress-bar{
 height:100%;
 width:0%;
 border-radius:50px;
-background:linear-gradient(to right,var(--gold),var(--gold2));
-box-shadow:0 0 20px rgba(255,180,0,.6);
-animation:load 20s linear forwards;
+background:linear-gradient(
+90deg,
+var(--gold),
+var(--gold2),
+var(--gold3)
+);
+box-shadow:0 0 25px rgba(255,180,0,.7);
+position:relative;
+overflow:hidden;
 }
 
-@keyframes load{
-0%{
-width:0%;
+.progress-bar::after{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,.45),
+transparent
+);
+animation:moveLight 2s linear infinite;
 }
-100%{
-width:100%;
+
+@keyframes moveLight{
+from{
+transform:translateX(-100%);
+}
+to{
+transform:translateX(100%);
 }
 }
 
 /* STATUS */
+
 .status{
 margin-top:35px;
-font-size:18px;
+font-size:19px;
+line-height:1.9;
 color:#ddd;
-line-height:1.8;
 }
 
 .status span{
@@ -281,92 +382,118 @@ color:var(--gold);
 font-weight:700;
 }
 
-/* TIMER */
-.timer{
-margin-top:35px;
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
-}
+/* TIMER HIDDEN */
 
-.time-box{
-width:130px;
-height:130px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.1);
-border-radius:25px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-backdrop-filter:blur(10px);
-transition:.4s;
-}
-
-.time-box:hover{
-transform:translateY(-8px) scale(1.05);
-border-color:var(--gold);
-}
-
-.time-box h3{
-font-size:40px;
-color:var(--gold);
-}
-
-.time-box span{
-margin-top:8px;
-letter-spacing:3px;
-font-size:13px;
-color:#ccc;
+.hidden-timer{
+display:none;
 }
 
 /* BUTTON */
+
 .enter-btn{
 margin-top:45px;
-padding:18px 50px;
+padding:20px 55px;
 border:none;
 border-radius:60px;
-font-size:17px;
-font-weight:700;
-cursor:pointer;
-background:linear-gradient(to right,var(--gold),var(--gold2));
-color:#000;
+font-size:18px;
+font-weight:800;
+cursor:not-allowed;
+background:linear-gradient(
+to right,
+#444,
+#666
+);
+color:#ddd;
 transition:.4s;
-box-shadow:0 15px 40px rgba(255,180,0,.35);
+letter-spacing:1px;
+position:relative;
+overflow:hidden;
 }
 
-.enter-btn:hover{
-transform:translateY(-5px) scale(1.05);
-box-shadow:0 20px 50px rgba(255,180,0,.5);
+.enter-btn.active{
+cursor:pointer;
+background:linear-gradient(
+to right,
+var(--gold),
+var(--gold2)
+);
+color:#000;
+box-shadow:
+0 0 25px rgba(255,180,0,.5),
+0 0 60px rgba(255,180,0,.4);
+animation:buttonGlow 1.5s infinite alternate;
+}
+
+.enter-btn.active:hover{
+transform:translateY(-6px) scale(1.05);
+}
+
+@keyframes buttonGlow{
+from{
+box-shadow:0 0 20px rgba(255,180,0,.4);
+}
+to{
+box-shadow:0 0 60px rgba(255,180,0,.8);
+}
+}
+
+/* LIVE STATUS */
+
+.live-status{
+margin-top:25px;
+font-size:15px;
+color:#aaa;
+letter-spacing:2px;
+animation:blink 1.4s infinite;
+}
+
+@keyframes blink{
+0%,100%{
+opacity:1;
+}
+50%{
+opacity:.4;
+}
 }
 
 /* FOOTER */
+
 .footer{
 margin-top:40px;
 font-size:13px;
+line-height:1.9;
 color:#888;
-line-height:1.8;
+}
+
+/* FLASH */
+
+.flash{
+position:fixed;
+inset:0;
+background:white;
+opacity:0;
+pointer-events:none;
+z-index:999;
 }
 
 /* RESPONSIVE */
+
 @media(max-width:768px){
 
 .queue-title{
-font-size:38px;
+font-size:40px;
 }
 
 .queue-number{
-font-size:65px;
+font-size:70px;
 }
 
 .queue-box{
 padding:45px 25px;
 }
 
-.time-box{
-width:110px;
-height:110px;
+.enter-btn{
+width:100%;
 }
 
 }
@@ -378,10 +505,14 @@ height:110px;
 
 <div class="bg"></div>
 
+<div class="stars" id="stars"></div>
+
 <div class="particles" id="particles"></div>
 
 <div class="glow one"></div>
 <div class="glow two"></div>
+
+<div class="flash" id="flash"></div>
 
 <div class="main">
 
@@ -397,8 +528,8 @@ WORLD TOUR
 </h1>
 
 <p class="queue-sub">
-You are now in the official waiting room for WESTLIFE WORLD TOUR 2027 Indonesia ticket sales.
-Please do not refresh or leave this page.
+You are now in the official priority waiting room for WESTLIFE WORLD TOUR 2027 Indonesia ticket access.
+Please keep this tab open while the system prepares your exclusive entry.
 </p>
 
 <div class="queue-number" id="queueNumber">
@@ -406,13 +537,13 @@ Please do not refresh or leave this page.
 </div>
 
 <div class="queue-label">
-YOUR QUEUE NUMBER
+YOUR PRIORITY QUEUE
 </div>
 
 <div class="progress-area">
 
 <div class="progress-text">
-<span>Queue Progress</span>
+<span>QUEUE SYNCHRONIZATION</span>
 <span id="progressPercent">0%</span>
 </div>
 
@@ -423,31 +554,26 @@ YOUR QUEUE NUMBER
 </div>
 
 <div class="status">
-Estimated waiting time:
-<span id="waitTime">12 Minutes</span>
+Access status:
+<span id="statusText">System Preparing Access...</span>
 </div>
 
-<div class="timer">
-
-<div class="time-box">
-<h3 id="minutes">12</h3>
-<span>MINUTES</span>
+<div class="hidden-timer">
+<div id="minutes">10</div>
+<div id="seconds">00</div>
 </div>
 
-<div class="time-box">
-<h3 id="seconds">00</h3>
-<span>SECONDS</span>
-</div>
-
-</div>
-
-<button class="enter-btn">
+<button class="enter-btn" id="accessBtn" disabled>
 WAITING FOR ACCESS
 </button>
 
+<div class="live-status">
+● LIVE SECURE QUEUE CONNECTION
+</div>
+
 <div class="footer">
 © 2027 WESTLIFE THE ANNIVERSARY WORLD TOUR<br>
-Official Queue System — Please keep this tab open
+Official Queue System — Protected Secure Access
 </div>
 
 </div>
@@ -456,69 +582,172 @@ Official Queue System — Please keep this tab open
 
 <script>
 
-/* PARTICLES */
+/* =========================
+STARS
+========================= */
+
+const stars = document.getElementById("stars");
+
+for(let i=0;i<180;i++){
+
+const star = document.createElement("div");
+
+star.classList.add("star");
+
+star.style.left = Math.random()*100 + "vw";
+star.style.animationDuration = (Math.random()*25+10)+"s";
+star.style.animationDelay = Math.random()*8+"s";
+star.style.opacity = Math.random();
+
+stars.appendChild(star);
+
+}
+
+/* =========================
+PARTICLES
+========================= */
+
 const particles = document.getElementById("particles");
 
-for(let i=0;i<160;i++){
+for(let i=0;i<220;i++){
 
 const span = document.createElement("span");
 
 span.style.left = Math.random()*100 + "vw";
-span.style.animationDuration = (Math.random()*10+5)+"s";
-span.style.animationDelay = Math.random()*5+"s";
+span.style.width = Math.random()*6+2+"px";
+span.style.height = span.style.width;
+span.style.animationDuration = (Math.random()*12+6)+"s";
+span.style.animationDelay = Math.random()*8+"s";
 span.style.opacity = Math.random();
 
 particles.appendChild(span);
 
 }
 
-/* RANDOM QUEUE */
+/* =========================
+QUEUE NUMBER
+========================= */
+
 document.getElementById("queueNumber").innerHTML =
 "#" + Math.floor(Math.random()*90000 + 10000);
 
-/* COUNTDOWN */
-let minutes = 12;
-let seconds = 0;
+/* =========================
+WAIT SYSTEM
+========================= */
 
-const minEl = document.getElementById("minutes");
-const secEl = document.getElementById("seconds");
+/*
 
-setInterval(()=>{
+10 MENIT:
+BUTTON BISA DIKLIK
 
-if(seconds == 0){
+12 MENIT:
+AUTO REDIRECT
 
-if(minutes > 0){
-minutes--;
-seconds = 59;
-}
+TIMER DISEMBUNYIKAN
+
+*/
+
+const accessBtn = document.getElementById("accessBtn");
+const progressBar = document.getElementById("progressBar");
+const progressPercent = document.getElementById("progressPercent");
+const statusText = document.getElementById("statusText");
+
+const WAIT_ACCESS = 10 * 60 * 1000;
+const AUTO_REDIRECT = 12 * 60 * 1000;
+
+const startTime = Date.now();
+
+let redirected = false;
+
+const interval = setInterval(()=>{
+
+const elapsed = Date.now() - startTime;
+
+/* PROGRESS */
+
+let percent = Math.min((elapsed / AUTO_REDIRECT) * 100,100);
+
+progressBar.style.width = percent + "%";
+progressPercent.innerHTML = Math.floor(percent) + "%";
+
+/* STATUS ROTATE */
+
+if(elapsed < 180000){
+
+statusText.innerHTML = "Synchronizing Queue Data...";
+
+}else if(elapsed < 360000){
+
+statusText.innerHTML = "Validating Secure Session...";
+
+}else if(elapsed < WAIT_ACCESS){
+
+statusText.innerHTML = "Finalizing Priority Access...";
 
 }else{
-seconds--;
+
+statusText.innerHTML = "ACCESS GRANTED";
+
 }
 
-minEl.innerHTML = String(minutes).padStart(2,'0');
-secEl.innerHTML = String(seconds).padStart(2,'0');
+/* 10 MINUTES ENABLE BUTTON */
+
+if(elapsed >= WAIT_ACCESS){
+
+accessBtn.disabled = false;
+
+accessBtn.classList.add("active");
+
+accessBtn.innerHTML = "ENTER ACCESS";
+
+}
+
+/* 12 MINUTES AUTO REDIRECT */
+
+if(elapsed >= AUTO_REDIRECT && !redirected){
+
+redirected = true;
+
+document.getElementById("flash").style.opacity = "1";
+document.getElementById("flash").style.transition = ".8s";
+
+setTimeout(()=>{
+
+window.location.href =
+"https://fforeverindonesia-svg.github.io/WESTLIFE-2/";
+
+},800);
+
+clearInterval(interval);
+
+}
 
 },1000);
 
-/* PROGRESS */
-let progress = 0;
+/* =========================
+BUTTON CLICK
+========================= */
 
-const progressText = document.getElementById("progressPercent");
+accessBtn.addEventListener("click",()=>{
 
-setInterval(()=>{
+if(accessBtn.disabled) return;
 
-if(progress < 100){
+document.getElementById("flash").style.opacity = "1";
+document.getElementById("flash").style.transition = ".5s";
 
-progress++;
+setTimeout(()=>{
 
-progressText.innerHTML = progress + "%";
+window.location.href =
+"https://fforeverindonesia-svg.github.io/WESTLIFE-2/";
 
-}
+},500);
 
-},200);
+});
 
-/* NAV EFFECT */
+/* =========================
+MOUSE GLOW EFFECT
+========================= */
+
 window.addEventListener("mousemove",(e)=>{
 
 const x = e.clientX / window.innerWidth;
@@ -531,6 +760,14 @@ document.querySelector(".glow.two").style.transform =
 `translate(-${x*40}px,-${y*40}px)`;
 
 });
+
+/* =========================
+ANTI REFRESH FEEL
+========================= */
+
+window.onbeforeunload = function(){
+return "Queue progress will be lost.";
+};
 
 </script>
 
