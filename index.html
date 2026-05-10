@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>WESTLIFE THE ANNIVERSARY WORLD TOUR</title>
+<title>WESTLIFE ANNIVERSARY WORLD TOUR</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
@@ -14,33 +14,128 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:Arial, sans-serif;
 }
 
 body{
-background:url('background.png') center/cover no-repeat;
+background:#000;
+color:#fff;
 min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
 padding:20px;
-color:white;
-overflow:auto;
+overflow:hidden;
+}
+
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+background:url('https://fforeverindonesia-svg.github.io/background.png/') center/cover;
+filter:blur(10px);
+transform:scale(1.1);
+z-index:-2;
+}
+
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.75);
+z-index:-1;
 }
 
 .container{
 width:100%;
 max-width:420px;
-background:rgba(0,0,0,0.75);
-backdrop-filter:blur(15px);
-border:1px solid rgba(255,215,0,0.3);
+background:rgba(15,15,15,0.95);
+border:1px solid rgba(255,0,0,0.4);
 border-radius:25px;
 padding:25px;
-box-shadow:0 0 40px rgba(255,215,0,0.2);
-animation:fade 1s ease;
+box-shadow:0 0 30px rgba(255,0,0,0.3);
+animation:fadeIn 1s ease;
 }
 
-@keyframes fade{
+.poster{
+width:100%;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+h1{
+text-align:center;
+font-size:28px;
+color:#ff0000;
+margin-bottom:10px;
+}
+
+.sub{
+text-align:center;
+font-size:14px;
+margin-bottom:25px;
+color:#ddd;
+}
+
+.input{
+width:100%;
+padding:15px;
+margin-bottom:15px;
+border:none;
+border-radius:12px;
+background:#1a1a1a;
+color:#fff;
+font-size:15px;
+outline:none;
+}
+
+select.input{
+appearance:none;
+}
+
+.qris{
+width:100%;
+border-radius:20px;
+margin-top:15px;
+margin-bottom:20px;
+border:2px solid red;
+}
+
+.total{
+text-align:center;
+font-size:20px;
+margin-bottom:20px;
+color:#FFD700;
+font-weight:bold;
+}
+
+.btn{
+width:100%;
+padding:15px;
+border:none;
+border-radius:15px;
+background:red;
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.03);
+background:#ff2222;
+}
+
+.loading{
+display:none;
+text-align:center;
+margin-top:15px;
+font-size:14px;
+color:#ccc;
+}
+
+@keyframes fadeIn{
 from{
 opacity:0;
 transform:translateY(20px);
@@ -51,128 +146,53 @@ transform:translateY(0);
 }
 }
 
-.poster{
-width:100%;
-border-radius:20px;
-margin-bottom:20px;
-}
-
-h1{
-font-size:24px;
-text-align:center;
-margin-bottom:10px;
-color:gold;
-}
-
-.subtitle{
-text-align:center;
-margin-bottom:20px;
-font-size:14px;
-}
-
-.countdown{
-text-align:center;
-font-size:18px;
-margin-bottom:20px;
-color:#ffd700;
-}
-
-input,select{
-width:100%;
-padding:14px;
-margin-bottom:15px;
-border:none;
-border-radius:12px;
-background:#111;
-color:white;
-font-size:15px;
-}
-
-.qris{
-width:100%;
-border-radius:20px;
-margin-top:15px;
-margin-bottom:20px;
-}
-
-button{
-width:100%;
-padding:15px;
-border:none;
-border-radius:15px;
-background:gold;
-color:black;
-font-weight:bold;
-font-size:16px;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-transform:scale(1.03);
-}
-
-.admin{
-margin-top:20px;
-text-align:center;
-font-size:14px;
-}
-
 </style>
 </head>
 
 <body>
 
+<div class="bg"></div>
+<div class="overlay"></div>
+
 <div class="container">
 
-<img src="posterevent.jpg" class="poster">
+<img src="https://fforeverindonesia-svg.github.io/posterevent.jpg/" class="poster">
 
-<h1>WESTLIFE THE ANNIVERSARY WORLD TOUR</h1>
+<h1>WESTLIFE TOUR</h1>
 
-<div class="subtitle">
-🔖 OPEN PRE-SALE TICKET NOW<br>
-🎫 TIKET DIGITAL
-</div>
+<p class="sub">
+🎫 Official E-Ticket Booking
+</p>
 
-<div class="countdown" id="countdown"></div>
+<input type="text" id="nama" class="input" placeholder="Nama Lengkap">
 
-<input type="text" id="nama" placeholder="Nama Lengkap">
+<input type="email" id="email" class="input" placeholder="Email Aktif">
 
-<input type="email" id="email" placeholder="Email Aktif">
-
-<select id="kategori" onchange="hitungTotal()">
-
-<option value="">Pilih Kategori</option>
-
-<option value="2750000">VIP PACKAGE - Rp. 2.750.000</option>
-
-<option value="2500000">CAT 1A & B - Rp. 2.500.000</option>
-
-<option value="2250000">CAT 2A & B - Rp. 2.250.000</option>
-
-<option value="1850000">CAT 3A & B - Rp. 1.850.000</option>
-
-<option value="1450000">CAT 4A & B - Rp. 1.450.000</option>
-
-<option value="1250000">CAT 5A & B - Rp. 1.250.000</option>
-
-<option value="850000">CAT 6A & B - Rp. 850.000</option>
-
+<select id="ticket" class="input">
+<option value="Festival">Festival</option>
+<option value="VIP">VIP</option>
+<option value="VVIP">VVIP</option>
 </select>
 
-<input type="number" id="jumlah" placeholder="Jumlah Tiket" oninput="hitungTotal()">
+<select id="qty" class="input" onchange="hitungTotal()">
+<option value="1">1 Ticket</option>
+<option value="2">2 Ticket</option>
+<option value="3">3 Ticket</option>
+<option value="4">4 Ticket</option>
+</select>
 
-<input type="text" id="total" placeholder="Total Pembayaran" readonly>
+<img src="https://fforeverindonesia-svg.github.io/qris.png/" class="qris">
 
-<img src="qris.png" class="qris">
+<div class="total" id="totalText">
+TOTAL : Rp 500.000
+</div>
 
-<button onclick="kirimEmail()">
-KONFIRMASI PEMBAYARAN
+<button class="btn" onclick="kirimTicket()">
+BAYAR SEKARANG
 </button>
 
-<div class="admin">
-WHATSAPP ADMIN<br>
-082372511525
+<div class="loading" id="loading">
+Memproses pembayaran...
 </div>
 
 </div>
@@ -183,38 +203,52 @@ emailjs.init("xetUr3ZyFtJ2V9-xE");
 
 function hitungTotal(){
 
-let harga=document.getElementById("kategori").value;
-let jumlah=document.getElementById("jumlah").value;
+const ticket = document.getElementById("ticket").value;
+const qty = parseInt(document.getElementById("qty").value);
 
-let total=harga*jumlah;
+let harga = 500000;
 
-document.getElementById("total").value=
-"Rp. "+total.toLocaleString("id-ID");
+if(ticket=="VIP"){
+harga=1000000;
+}
+
+if(ticket=="VVIP"){
+harga=2000000;
+}
+
+let total = harga * qty;
+
+document.getElementById("totalText").innerHTML =
+"TOTAL : Rp " + total.toLocaleString("id-ID");
 
 }
 
-function kirimEmail(){
+function kirimTicket(){
 
-const params={
+const nama = document.getElementById("nama").value;
+const email = document.getElementById("email").value;
+const ticket = document.getElementById("ticket").value;
+const qty = document.getElementById("qty").value;
 
-user_name:document.getElementById("nama").value,
+let totalText = document.getElementById("totalText").innerText;
 
-user_email:document.getElementById("email").value,
+if(nama=="" || email==""){
+alert("Lengkapi data terlebih dahulu");
+return;
+}
 
-ticket_type:document.getElementById("kategori").options[
-document.getElementById("kategori").selectedIndex
-].text,
-
-quantity:document.getElementById("jumlah").value,
-
-total:document.getElementById("total").value
-
-};
+document.getElementById("loading").style.display="block";
 
 emailjs.send(
 "service_3ckaa5o",
 "template_xw4clmu",
-params
+{
+to_email: email,
+user_name: nama,
+ticket_type: ticket,
+quantity: qty,
+total: totalText
+}
 )
 
 .then(function(response){
@@ -231,29 +265,7 @@ window.location.href="failed.html";
 
 }
 
-let countDate=new Date("Dec 31, 2026 19:00:00").getTime();
-
-setInterval(function(){
-
-let now=new Date().getTime();
-
-let distance=countDate-now;
-
-let days=Math.floor(distance/(1000*60*60*24));
-
-let hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-
-let minutes=Math.floor((distance%(1000*60*60))/(1000*60));
-
-let seconds=Math.floor((distance%(1000*60))/1000);
-
-document.getElementById("countdown").innerHTML=
-days+"H "+
-hours+"J "+
-minutes+"M "+
-seconds+"D";
-
-},1000);
+hitungTotal();
 
 </script>
 
