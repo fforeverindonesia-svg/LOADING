@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -14,7 +15,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
@@ -36,6 +37,16 @@ background:url('https://fforeverindonesia-svg.github.io/background.png/') center
 filter:blur(10px);
 transform:scale(1.1);
 z-index:-2;
+animation:bgzoom 10s infinite alternate;
+}
+
+@keyframes bgzoom{
+from{
+transform:scale(1.1);
+}
+to{
+transform:scale(1.2);
+}
 }
 
 .overlay{
@@ -48,19 +59,21 @@ z-index:-1;
 
 .container{
 width:100%;
-max-width:420px;
+max-width:430px;
 background:rgba(15,15,15,0.95);
-border:1px solid rgba(255,0,0,0.4);
+border:1px solid rgba(255,0,0,0.5);
 border-radius:25px;
 padding:25px;
-box-shadow:0 0 30px rgba(255,0,0,0.3);
+box-shadow:0 0 40px rgba(255,0,0,0.3);
 animation:fadeIn 1s ease;
+backdrop-filter:blur(10px);
 }
 
 .poster{
 width:100%;
 border-radius:20px;
 margin-bottom:20px;
+box-shadow:0 0 20px rgba(255,0,0,0.4);
 }
 
 h1{
@@ -75,6 +88,7 @@ text-align:center;
 font-size:14px;
 margin-bottom:25px;
 color:#ddd;
+line-height:1.5;
 }
 
 .input{
@@ -87,6 +101,12 @@ background:#1a1a1a;
 color:#fff;
 font-size:15px;
 outline:none;
+border:1px solid rgba(255,255,255,0.1);
+}
+
+.input:focus{
+border:1px solid red;
+box-shadow:0 0 10px rgba(255,0,0,0.4);
 }
 
 select.input{
@@ -99,11 +119,12 @@ border-radius:20px;
 margin-top:15px;
 margin-bottom:20px;
 border:2px solid red;
+box-shadow:0 0 25px rgba(255,0,0,0.4);
 }
 
 .total{
 text-align:center;
-font-size:20px;
+font-size:22px;
 margin-bottom:20px;
 color:#FFD700;
 font-weight:bold;
@@ -111,7 +132,7 @@ font-weight:bold;
 
 .btn{
 width:100%;
-padding:15px;
+padding:16px;
 border:none;
 border-radius:15px;
 background:red;
@@ -120,6 +141,7 @@ font-size:18px;
 font-weight:bold;
 cursor:pointer;
 transition:0.3s;
+box-shadow:0 0 20px rgba(255,0,0,0.4);
 }
 
 .btn:hover{
@@ -133,6 +155,14 @@ text-align:center;
 margin-top:15px;
 font-size:14px;
 color:#ccc;
+}
+
+.note{
+margin-top:20px;
+font-size:12px;
+text-align:center;
+color:#999;
+line-height:1.5;
 }
 
 @keyframes fadeIn{
@@ -161,17 +191,44 @@ transform:translateY(0);
 <h1>WESTLIFE TOUR</h1>
 
 <p class="sub">
-🎫 Official E-Ticket Booking
+🎫 Official E-Ticket Booking<br>
+Secure Digital Ticket Confirmation
 </p>
 
 <input type="text" id="nama" class="input" placeholder="Nama Lengkap">
 
 <input type="email" id="email" class="input" placeholder="Email Aktif">
 
-<select id="ticket" class="input">
-<option value="Festival">Festival</option>
-<option value="VIP">VIP</option>
-<option value="VVIP">VVIP</option>
+<select id="ticket" class="input" onchange="hitungTotal()">
+
+<option value="VIP PACKAGE">
+VIP PACKAGE - Rp 2.750.000
+</option>
+
+<option value="CAT 1">
+CAT 1 A & B - Rp 2.500.000
+</option>
+
+<option value="CAT 2">
+CAT 2 A & B - Rp 2.250.000
+</option>
+
+<option value="CAT 3">
+CAT 3 A & B - Rp 1.850.000
+</option>
+
+<option value="CAT 4">
+CAT 4 A & B - Rp 1.450.000
+</option>
+
+<option value="CAT 5">
+CAT 5 A & B - Rp 1.250.000
+</option>
+
+<option value="CAT 6">
+CAT 6 A & B - Rp 850.000
+</option>
+
 </select>
 
 <select id="qty" class="input" onchange="hitungTotal()">
@@ -184,7 +241,7 @@ transform:translateY(0);
 <img src="https://fforeverindonesia-svg.github.io/qris.png/" class="qris">
 
 <div class="total" id="totalText">
-TOTAL : Rp 500.000
+TOTAL : Rp 2.750.000
 </div>
 
 <button class="btn" onclick="kirimTicket()">
@@ -193,6 +250,10 @@ BAYAR SEKARANG
 
 <div class="loading" id="loading">
 Memproses pembayaran...
+</div>
+
+<div class="note">
+E-ticket akan dikirim otomatis ke email setelah pembayaran berhasil.
 </div>
 
 </div>
@@ -206,14 +267,34 @@ function hitungTotal(){
 const ticket = document.getElementById("ticket").value;
 const qty = parseInt(document.getElementById("qty").value);
 
-let harga = 500000;
+let harga = 0;
 
-if(ticket=="VIP"){
-harga=1000000;
+if(ticket=="VIP PACKAGE"){
+harga = 2750000;
 }
 
-if(ticket=="VVIP"){
-harga=2000000;
+if(ticket=="CAT 1"){
+harga = 2500000;
+}
+
+if(ticket=="CAT 2"){
+harga = 2250000;
+}
+
+if(ticket=="CAT 3"){
+harga = 1850000;
+}
+
+if(ticket=="CAT 4"){
+harga = 1450000;
+}
+
+if(ticket=="CAT 5"){
+harga = 1250000;
+}
+
+if(ticket=="CAT 6"){
+harga = 850000;
 }
 
 let total = harga * qty;
