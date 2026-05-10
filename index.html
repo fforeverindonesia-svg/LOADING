@@ -1,358 +1,626 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Verifikasi Pembayaran Ulang</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, sans-serif;
-    }
+<title>VERIFIKASI PEMBAYARAN ULANG</title>
 
-    body{
-      background:#050505;
-      overflow-x:hidden;
-      color:white;
-      min-height:100vh;
-      position:relative;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    /* BACKGROUND ANIMASI */
-    body::before{
-      content:'';
-      position:fixed;
-      width:200%;
-      height:200%;
-      background:
-      radial-gradient(circle,#ff0066 0%,transparent 20%),
-      radial-gradient(circle,#00ccff 0%,transparent 20%),
-      radial-gradient(circle,#ffcc00 0%,transparent 20%);
-      background-size:30% 30%;
-      animation:bgMove 18s linear infinite;
-      opacity:0.15;
-      z-index:-2;
-    }
+<style>
 
-    @keyframes bgMove{
-      0%{transform:translate(0,0) rotate(0deg);}
-      100%{transform:translate(-20%, -20%) rotate(360deg);}
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
-    .container{
-      width:95%;
-      max-width:850px;
-      margin:40px auto;
-      padding:25px;
-      border-radius:25px;
-      background:rgba(255,255,255,0.08);
-      backdrop-filter:blur(15px);
-      box-shadow:0 0 40px rgba(255,0,120,0.4);
-      animation:fadeIn 1.5s ease;
-    }
+body{
+background:#050505;
+overflow-x:hidden;
+color:white;
+min-height:100vh;
+position:relative;
+}
 
-    @keyframes fadeIn{
-      from{
-        opacity:0;
-        transform:translateY(50px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
+/* BACKGROUND BLUR ANIMATION */
 
-    h1{
-      text-align:center;
-      font-size:34px;
-      margin-bottom:10px;
-      color:#ffcc00;
-      text-shadow:0 0 20px #ff0066;
-      animation:pulse 2s infinite;
-    }
+.blur{
+position:fixed;
+border-radius:50%;
+filter:blur(120px);
+opacity:.5;
+z-index:-1;
+animation:move 12s infinite alternate;
+}
 
-    @keyframes pulse{
-      0%{transform:scale(1);}
-      50%{transform:scale(1.03);}
-      100%{transform:scale(1);}
-    }
+.blur1{
+width:350px;
+height:350px;
+background:#ff0066;
+top:-100px;
+left:-100px;
+}
 
-    .sub{
-      text-align:center;
-      margin-bottom:30px;
-      color:#ddd;
-      font-size:15px;
-    }
+.blur2{
+width:300px;
+height:300px;
+background:#00d9ff;
+bottom:-80px;
+right:-80px;
+animation-delay:2s;
+}
 
-    .layout-img{
-      width:100%;
-      border-radius:20px;
-      margin-bottom:25px;
-      box-shadow:0 0 30px rgba(255,255,255,0.2);
-      animation:zoom 5s infinite alternate;
-    }
+.blur3{
+width:250px;
+height:250px;
+background:#ffcc00;
+top:40%;
+left:40%;
+animation-delay:4s;
+}
 
-    @keyframes zoom{
-      from{transform:scale(1);}
-      to{transform:scale(1.02);}
-    }
+@keyframes move{
+0%{
+transform:translate(0,0) scale(1);
+}
+100%{
+transform:translate(80px,-50px) scale(1.2);
+}
+}
 
-    .form-group{
-      margin-bottom:20px;
-    }
+/* PARTICLE */
 
-    label{
-      display:block;
-      margin-bottom:8px;
-      font-weight:bold;
-      color:#ffcc00;
-    }
+.particles{
+position:fixed;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:-2;
+}
 
-    input, select{
-      width:100%;
-      padding:15px;
-      border:none;
-      outline:none;
-      border-radius:14px;
-      background:rgba(255,255,255,0.12);
-      color:white;
-      font-size:15px;
-      transition:0.3s;
-    }
+.particles span{
+position:absolute;
+display:block;
+width:5px;
+height:5px;
+background:white;
+border-radius:50%;
+animation:particle 15s linear infinite;
+opacity:.4;
+}
 
-    input:focus, select:focus{
-      box-shadow:0 0 15px #ff0066;
-      transform:scale(1.01);
-    }
+@keyframes particle{
+0%{
+transform:translateY(100vh) scale(0);
+}
+100%{
+transform:translateY(-100vh) scale(1);
+}
+}
 
-    option{
-      color:black;
-    }
+/* CONTAINER */
 
-    .qris-box{
-      margin-top:30px;
-      border:3px dashed #ffcc00;
-      padding:20px;
-      border-radius:20px;
-      text-align:center;
-      background:rgba(255,255,255,0.05);
-      animation:glow 2s infinite alternate;
-    }
+.container{
+width:95%;
+max-width:850px;
+margin:30px auto;
+padding:25px;
+border-radius:28px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 0 50px rgba(255,0,100,.35);
+animation:fade 1.2s ease;
+}
 
-    @keyframes glow{
-      from{box-shadow:0 0 15px #ff0066;}
-      to{box-shadow:0 0 30px #00ccff;}
-    }
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
 
-    .qris-box img{
-      width:260px;
-      max-width:100%;
-      border-radius:15px;
-      margin-top:15px;
-    }
+.header{
+text-align:center;
+margin-bottom:25px;
+}
 
-    .info{
-      margin-top:18px;
-      line-height:1.7;
-      color:#eee;
-      font-size:14px;
-    }
+.header h1{
+font-size:34px;
+font-weight:700;
+background:linear-gradient(45deg,#ffcc00,#ff0066,#00d9ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:glow 2s infinite alternate;
+}
 
-    .upload-box{
-      margin-top:25px;
-    }
+@keyframes glow{
+from{
+filter:drop-shadow(0 0 5px #ff0066);
+}
+to{
+filter:drop-shadow(0 0 20px #00d9ff);
+}
+}
 
-    input[type=file]{
-      padding:12px;
-      background:rgba(255,255,255,0.08);
-    }
+.header p{
+margin-top:10px;
+color:#ddd;
+font-size:14px;
+line-height:1.6;
+}
 
-    .btn{
-      width:100%;
-      padding:18px;
-      margin-top:30px;
-      border:none;
-      border-radius:18px;
-      font-size:18px;
-      font-weight:bold;
-      cursor:not-allowed;
-      background:gray;
-      color:white;
-      transition:0.4s;
-    }
+/* IMAGE */
 
-    .btn.active{
-      background:linear-gradient(45deg,#ff0066,#ffcc00);
-      box-shadow:0 0 25px rgba(255,0,120,0.7);
-      cursor:pointer;
-      animation:buttonGlow 1.5s infinite alternate;
-    }
+.layout{
+width:100%;
+border-radius:20px;
+margin-bottom:25px;
+box-shadow:0 0 35px rgba(255,255,255,.15);
+animation:zoom 5s infinite alternate;
+}
 
-    @keyframes buttonGlow{
-      from{transform:scale(1);}
-      to{transform:scale(1.02);}
-    }
+@keyframes zoom{
+from{
+transform:scale(1);
+}
+to{
+transform:scale(1.02);
+}
+}
 
-    .footer{
-      text-align:center;
-      margin-top:25px;
-      font-size:12px;
-      color:#aaa;
-    }
+/* FORM */
 
-  </style>
+.form-group{
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin-bottom:8px;
+font-weight:600;
+color:#ffcc00;
+}
+
+input,select{
+width:100%;
+padding:16px;
+border:none;
+outline:none;
+border-radius:16px;
+background:rgba(255,255,255,.08);
+color:white;
+font-size:15px;
+transition:.3s;
+}
+
+input:focus,select:focus{
+transform:scale(1.01);
+box-shadow:0 0 18px #ff0066;
+}
+
+option{
+color:black;
+}
+
+/* QRIS */
+
+.qris-box{
+margin-top:30px;
+padding:25px;
+border-radius:25px;
+background:rgba(255,255,255,.06);
+border:2px dashed #ffcc00;
+text-align:center;
+animation:borderGlow 2s infinite alternate;
+}
+
+@keyframes borderGlow{
+from{
+box-shadow:0 0 10px #ff0066;
+}
+to{
+box-shadow:0 0 25px #00d9ff;
+}
+}
+
+.qris-box h2{
+margin-bottom:15px;
+font-size:24px;
+}
+
+.qris-box img{
+width:260px;
+max-width:100%;
+border-radius:20px;
+box-shadow:0 0 25px rgba(255,255,255,.2);
+animation:float 3s infinite ease-in-out;
+}
+
+@keyframes float{
+0%{
+transform:translateY(0px);
+}
+50%{
+transform:translateY(-10px);
+}
+100%{
+transform:translateY(0px);
+}
+}
+
+.qris-info{
+margin-top:20px;
+font-size:14px;
+line-height:1.8;
+color:#ddd;
+}
+
+/* FILE */
+
+.file-upload{
+margin-top:20px;
+}
+
+/* BUTTON */
+
+.btn{
+width:100%;
+padding:18px;
+margin-top:35px;
+border:none;
+border-radius:18px;
+font-size:18px;
+font-weight:700;
+color:white;
+background:gray;
+cursor:not-allowed;
+transition:.4s;
+}
+
+.btn.active{
+cursor:pointer;
+background:linear-gradient(45deg,#ff0066,#ffcc00,#00d9ff);
+background-size:300% 300%;
+animation:gradient 4s ease infinite;
+box-shadow:0 0 30px rgba(255,0,100,.6);
+}
+
+@keyframes gradient{
+0%{
+background-position:0% 50%;
+}
+50%{
+background-position:100% 50%;
+}
+100%{
+background-position:0% 50%;
+}
+}
+
+/* LOADING */
+
+.loading{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.85);
+backdrop-filter:blur(12px);
+z-index:999;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+.loader{
+width:90px;
+height:90px;
+border:6px solid rgba(255,255,255,.2);
+border-top:6px solid #ffcc00;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+.loading p{
+margin-top:20px;
+font-size:18px;
+animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+0%{
+opacity:.5;
+}
+50%{
+opacity:1;
+}
+100%{
+opacity:.5;
+}
+}
+
+/* SUCCESS */
+
+.success{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#050505;
+z-index:1000;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:20px;
+}
+
+.success h1{
+font-size:38px;
+margin-bottom:20px;
+color:#00ff88;
+animation:successGlow 1.5s infinite alternate;
+}
+
+@keyframes successGlow{
+from{
+text-shadow:0 0 10px #00ff88;
+}
+to{
+text-shadow:0 0 25px #00ff88;
+}
+}
+
+.success p{
+color:#ddd;
+line-height:1.8;
+max-width:500px;
+}
+
+.success button{
+margin-top:30px;
+padding:16px 35px;
+border:none;
+border-radius:18px;
+background:linear-gradient(45deg,#00ff88,#00d9ff);
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:25px;
+text-align:center;
+font-size:12px;
+color:#aaa;
+}
+
+</style>
 </head>
 <body>
 
+<div class="blur blur1"></div>
+<div class="blur blur2"></div>
+<div class="blur blur3"></div>
+
+<div class="particles">
+<span style="left:10%;animation-duration:10s;"></span>
+<span style="left:20%;animation-duration:15s;"></span>
+<span style="left:30%;animation-duration:12s;"></span>
+<span style="left:40%;animation-duration:18s;"></span>
+<span style="left:50%;animation-duration:9s;"></span>
+<span style="left:60%;animation-duration:14s;"></span>
+<span style="left:70%;animation-duration:17s;"></span>
+<span style="left:80%;animation-duration:11s;"></span>
+<span style="left:90%;animation-duration:16s;"></span>
+</div>
+
 <div class="container">
 
-  <h1>VERIFIKASI PEMBAYARAN ULANG</h1>
-  <div class="sub">
-    Silahkan isi data dengan benar untuk melakukan verifikasi pembayaran ulang.
-  </div>
+<div class="header">
+<h1>VERIFIKASI PEMBAYARAN ULANG</h1>
+<p>
+Silahkan lakukan verifikasi ulang pembayaran failed dengan mengisi data secara lengkap dan benar.
+</p>
+</div>
 
-  <!-- GAMBAR LAYOUT -->
-  <img src="layout.jpg" class="layout-img">
+<!-- GANTI DENGAN FOTO LAYOUT -->
+<img src="layout.jpg" class="layout">
 
-  <form id="verifyForm">
+<form id="form">
 
-    <div class="form-group">
-      <label>DATA FAILED</label>
-      <input type="text" id="failed" placeholder="Masukkan data failed" required>
-    </div>
+<div class="form-group">
+<label>DATA FAILED</label>
+<input type="text" id="failed" placeholder="Masukkan data failed">
+</div>
 
-    <div class="form-group">
-      <label>NAMA LENGKAP</label>
-      <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
-    </div>
+<div class="form-group">
+<label>NAMA LENGKAP</label>
+<input type="text" id="nama" placeholder="Masukkan nama lengkap">
+</div>
 
-    <div class="form-group">
-      <label>Nomor WHATSAPP</label>
-      <input type="number" id="wa" placeholder="08xxxxxxxxxx" required>
-    </div>
+<div class="form-group">
+<label>Nomor WHATSAPP</label>
+<input type="number" id="wa" placeholder="08xxxxxxxxxx">
+</div>
 
-    <div class="form-group">
-      <label>CATEGORY TIKET</label>
-      <select id="kategori" required>
-        <option value="">-- Pilih Category Tiket --</option>
-        <option>VIP - IDR 2.750.000</option>
-        <option>CAT 1 A & B - IDR 2.500.000</option>
-        <option>CAT 2 A & B - IDR 2.250.000</option>
-        <option>CAT 3 A & B - IDR 1.850.000</option>
-        <option>CAT 4 A & B - IDR 1.450.000</option>
-        <option>CAT 5 A & B - IDR 1.250.000</option>
-        <option>CAT 6 A & B - IDR 850.000</option>
-      </select>
-    </div>
+<div class="form-group">
+<label>CATEGORY TIKET</label>
+<select id="kategori">
+<option value="">Pilih Category Tiket</option>
 
-    <div class="form-group">
-      <label>JUMLAH TIKET</label>
-      <input type="number" id="jumlah" min="1" max="10" placeholder="Jumlah tiket" required>
-    </div>
+<option>VIP - IDR 2.750.000</option>
+<option>CAT 1 A & B - IDR 2.500.000</option>
+<option>CAT 2 A & B - IDR 2.250.000</option>
+<option>CAT 3 A & B - IDR 1.850.000</option>
+<option>CAT 4 A & B - IDR 1.450.000</option>
+<option>CAT 5 A & B - IDR 1.250.000</option>
+<option>CAT 6 A & B - IDR 850.000</option>
 
-    <!-- QRIS -->
-    <div class="qris-box">
-      <h2>QRIS PEMBAYARAN ULANG</h2>
+</select>
+</div>
 
-      <!-- GANTI FILE QRIS -->
-      <img src="qris.png" alt="QRIS Pembayaran">
+<div class="form-group">
+<label>JUMLAH TIKET</label>
+<input type="number" min="1" max="10" id="jumlah" placeholder="Masukkan jumlah tiket">
+</div>
 
-      <div class="info">
-        Silahkan lakukan pembayaran ulang sesuai nominal yang failed.<br>
-        Pembayaran yang pending akan react dan kembali secara otomatis.
-      </div>
-    </div>
+<div class="qris-box">
 
-    <!-- Upload -->
-    <div class="upload-box">
-      <label>Upload Bukti Pembayaran</label>
-      <input type="file" id="upload" required>
-    </div>
+<h2>QRIS PEMBAYARAN ULANG</h2>
 
-    <!-- Tombol -->
-    <button type="submit" id="submitBtn" class="btn" disabled>
-      VERIFIKASI ULANG
-    </button>
+<!-- GANTI DENGAN FILE QRIS -->
+<img src="qris.png">
 
-  </form>
+<div class="qris-info">
+Silahkan lakukan pembayaran ulang sesuai nominal yang failed.<br>
+Pembayaran yang pending akan react dan kembali secara otomatis.
+</div>
 
-  <div class="footer">
-    © Event Verification System 2026
-  </div>
+</div>
+
+<div class="form-group file-upload">
+<label>UPLOAD BUKTI PEMBAYARAN</label>
+<input type="file" id="upload">
+</div>
+
+<button type="submit" class="btn" id="btn" disabled>
+VERIFIKASI ULANG
+</button>
+
+</form>
+
+<div class="footer">
+© EVENT VERIFICATION SYSTEM 2026
+</div>
+
+</div>
+
+<!-- LOADING -->
+
+<div class="loading" id="loading">
+<div class="loader"></div>
+<p>Memproses Verifikasi...</p>
+</div>
+
+<!-- SUCCESS -->
+
+<div class="success" id="success">
+<h1>VERIFIKASI BERHASIL</h1>
+
+<p>
+Data pembayaran ulang berhasil diverifikasi.<br>
+Silahkan tunggu admin melakukan pengecekan secara otomatis.
+</p>
+
+<button onclick="window.location.reload()">
+KEMBALI
+</button>
 
 </div>
 
 <script>
 
-const form = document.getElementById('verifyForm');
-const submitBtn = document.getElementById('submitBtn');
+const form = document.getElementById('form');
+const btn = document.getElementById('btn');
 
-const fields = [
-  document.getElementById('failed'),
-  document.getElementById('nama'),
-  document.getElementById('wa'),
-  document.getElementById('kategori'),
-  document.getElementById('jumlah'),
-  document.getElementById('upload')
+const inputs = [
+document.getElementById('failed'),
+document.getElementById('nama'),
+document.getElementById('wa'),
+document.getElementById('kategori'),
+document.getElementById('jumlah'),
+document.getElementById('upload')
 ];
 
-function checkForm(){
-  let valid = true;
+function validate(){
 
-  fields.forEach(field=>{
-    if(field.type === "file"){
-      if(field.files.length === 0){
-        valid = false;
-      }
-    }else{
-      if(field.value.trim() === ''){
-        valid = false;
-      }
-    }
-  });
+let valid = true;
 
-  if(valid){
-    submitBtn.disabled = false;
-    submitBtn.classList.add('active');
-  }else{
-    submitBtn.disabled = true;
-    submitBtn.classList.remove('active');
-  }
+inputs.forEach(input=>{
+
+if(input.type === "file"){
+if(input.files.length === 0){
+valid = false;
+}
+}else{
+if(input.value.trim() === ''){
+valid = false;
+}
 }
 
-fields.forEach(field=>{
-  field.addEventListener('input', checkForm);
-  field.addEventListener('change', checkForm);
 });
 
-form.addEventListener('submit', function(e){
-  e.preventDefault();
+if(valid){
+btn.disabled = false;
+btn.classList.add('active');
+}else{
+btn.disabled = true;
+btn.classList.remove('active');
+}
 
-  const nomor = document.getElementById('wa').value;
+}
 
-  // PESAN OTOMATIS WHATSAPP
-  const pesan = encodeURIComponent(
-`Halo ${document.getElementById('nama').value}
+inputs.forEach(input=>{
+input.addEventListener('input',validate);
+input.addEventListener('change',validate);
+});
+
+form.addEventListener('submit',function(e){
+
+e.preventDefault();
+
+document.getElementById('loading').style.display='flex';
+
+const nama = document.getElementById('nama').value;
+const wa = document.getElementById('wa').value;
+const kategori = document.getElementById('kategori').value;
+const jumlah = document.getElementById('jumlah').value;
+
+const pesan = encodeURIComponent(
+`Halo ${nama}
 
 Verifikasi pembayaran ulang anda sedang diproses.
 
-Detail:
-Kategori: ${document.getElementById('kategori').value}
-Jumlah Tiket: ${document.getElementById('jumlah').value}
+Kategori Tiket :
+${kategori}
+
+Jumlah Tiket :
+${jumlah}
 
 Mohon tunggu admin melakukan pengecekan.
-Terima kasih.`);
 
-  // Redirect WhatsApp
-  window.open(`https://wa.me/${nomor}?text=${pesan}`,'_blank');
+Terima kasih.`
+);
 
-  // Redirect Halaman Sukses
-  setTimeout(()=>{
-    window.location.href="success.html";
-  },1500);
+window.open(`https://wa.me/${wa}?text=${pesan}`,'_blank');
+
+setTimeout(()=>{
+
+document.getElementById('loading').style.display='none';
+document.getElementById('success').style.display='flex';
+
+},3000);
 
 });
 
