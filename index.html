@@ -1,773 +1,360 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>WESTLIFE QUEUE ROOM 2027</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-:root{
---gold:#ffcf73;
---gold2:#ff8c00;
---gold3:#ff5e00;
---dark:#050505;
---white:#ffffff;
-}
-
-html,body{
-width:100%;
-height:100%;
-overflow:hidden;
-font-family:'Poppins',sans-serif;
-background:#000;
-color:#fff;
-}
-
-/* BACKGROUND */
-
-body::before{
-content:'';
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at top left, rgba(255,140,0,.25), transparent 30%),
-radial-gradient(circle at bottom right, rgba(255,90,0,.2), transparent 30%),
-linear-gradient(to bottom, rgba(0,0,0,.5), rgba(0,0,0,.92));
-z-index:-5;
-}
-
-.bg{
-position:fixed;
-inset:0;
-background:url('queue-bg.jpg') center/cover no-repeat;
-filter:brightness(.45);
-animation:bgZoom 25s ease-in-out infinite alternate;
-z-index:-6;
-}
-
-@keyframes bgZoom{
-from{
-transform:scale(1);
-}
-to{
-transform:scale(1.12);
-}
-}
-
-/* STARS */
-
-.stars{
-position:fixed;
-width:100%;
-height:100%;
-overflow:hidden;
-z-index:-4;
-}
-
-.star{
-position:absolute;
-width:2px;
-height:2px;
-background:white;
-border-radius:50%;
-animation:starMove linear infinite;
-opacity:.7;
-}
-
-@keyframes starMove{
-from{
-transform:translateY(100vh);
-opacity:0;
-}
-10%{
-opacity:1;
-}
-to{
-transform:translateY(-120vh);
-opacity:0;
-}
-}
-
-/* PARTICLES */
-
-.particles{
-position:absolute;
-inset:0;
-overflow:hidden;
-z-index:-3;
-}
-
-.particles span{
-position:absolute;
-bottom:-20px;
-width:5px;
-height:5px;
-border-radius:50%;
-background:rgba(255,180,0,.8);
-box-shadow:0 0 15px rgba(255,180,0,.9);
-animation:particleMove linear infinite;
-}
-
-@keyframes particleMove{
-from{
-transform:translateY(0) scale(0);
-opacity:0;
-}
-10%{
-opacity:1;
-}
-to{
-transform:translateY(-120vh) scale(1.8);
-opacity:0;
-}
-}
-
-/* GLOW */
-
-.glow{
-position:absolute;
-border-radius:50%;
-filter:blur(100px);
-opacity:.35;
-z-index:-2;
-animation:floatGlow 8s ease-in-out infinite alternate;
-}
-
-.glow.one{
-width:400px;
-height:400px;
-background:orange;
-top:-100px;
-left:-100px;
-}
-
-.glow.two{
-width:350px;
-height:350px;
-background:red;
-bottom:-100px;
-right:-100px;
-}
-
-@keyframes floatGlow{
-from{
-transform:translate(0,0);
-}
-to{
-transform:translate(40px,40px);
-}
-}
-
-/* MAIN */
-
-.main{
-width:100%;
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-position:relative;
-}
-
-.queue-box{
-width:100%;
-max-width:920px;
-background:rgba(255,255,255,.06);
-backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,.12);
-border-radius:40px;
-padding:60px 50px;
-text-align:center;
-position:relative;
-overflow:hidden;
-box-shadow:
-0 0 40px rgba(255,140,0,.25),
-0 0 120px rgba(0,0,0,.8);
-animation:fadeUp 1.2s ease;
-}
-
-.queue-box::before{
-content:'';
-position:absolute;
-width:250%;
-height:250%;
-background:linear-gradient(
-45deg,
-transparent,
-rgba(255,200,0,.12),
-transparent
-);
-top:-80%;
-left:-80%;
-animation:shine 10s linear infinite;
-}
-
-@keyframes shine{
-100%{
-transform:translateX(100%);
-}
-}
-
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(80px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-/* LOGO */
-
-.logo{
-font-family:'Cinzel',serif;
-font-size:34px;
-font-weight:900;
-letter-spacing:6px;
-margin-bottom:25px;
-color:var(--gold);
-text-shadow:
-0 0 10px rgba(255,180,0,.6),
-0 0 30px rgba(255,180,0,.4);
-animation:pulseLogo 3s infinite;
-}
-
-@keyframes pulseLogo{
-0%,100%{
-transform:scale(1);
-}
-50%{
-transform:scale(1.05);
-}
-}
-
-/* TITLE */
-
-.queue-title{
-font-family:'Cinzel',serif;
-font-size:65px;
-line-height:1.05;
-margin-bottom:25px;
-background:linear-gradient(to bottom,#fff,var(--gold));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-text-shadow:0 0 40px rgba(255,180,0,.35);
-}
-
-.queue-sub{
-font-size:18px;
-line-height:1.9;
-color:#ddd;
-max-width:700px;
-margin:auto;
-margin-bottom:40px;
-}
-
-/* QUEUE NUMBER */
-
-.queue-number{
-font-size:110px;
-font-weight:900;
-color:var(--gold);
-margin-bottom:10px;
-text-shadow:
-0 0 15px rgba(255,180,0,.9),
-0 0 40px rgba(255,180,0,.7),
-0 0 80px rgba(255,180,0,.5);
-animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-0%,100%{
-transform:scale(1);
-}
-50%{
-transform:scale(1.05);
-}
-}
-
-.queue-label{
-letter-spacing:5px;
-font-size:16px;
-color:#bbb;
-margin-bottom:40px;
-}
-
-/* PROGRESS */
-
-.progress-area{
-margin-bottom:35px;
-}
-
-.progress-text{
-display:flex;
-justify-content:space-between;
-margin-bottom:14px;
-font-size:14px;
-color:#ddd;
-}
-
-.progress{
-width:100%;
-height:22px;
-border-radius:50px;
-background:rgba(255,255,255,.08);
-overflow:hidden;
-border:1px solid rgba(255,255,255,.08);
-position:relative;
-}
-
-.progress-bar{
-height:100%;
-width:0%;
-border-radius:50px;
-background:linear-gradient(
-90deg,
-var(--gold),
-var(--gold2),
-var(--gold3)
-);
-box-shadow:0 0 25px rgba(255,180,0,.7);
-position:relative;
-overflow:hidden;
-}
-
-.progress-bar::after{
-content:'';
-position:absolute;
-inset:0;
-background:linear-gradient(
-120deg,
-transparent,
-rgba(255,255,255,.45),
-transparent
-);
-animation:moveLight 2s linear infinite;
-}
-
-@keyframes moveLight{
-from{
-transform:translateX(-100%);
-}
-to{
-transform:translateX(100%);
-}
-}
-
-/* STATUS */
-
-.status{
-margin-top:35px;
-font-size:19px;
-line-height:1.9;
-color:#ddd;
-}
-
-.status span{
-color:var(--gold);
-font-weight:700;
-}
-
-/* TIMER HIDDEN */
-
-.hidden-timer{
-display:none;
-}
-
-/* BUTTON */
-
-.enter-btn{
-margin-top:45px;
-padding:20px 55px;
-border:none;
-border-radius:60px;
-font-size:18px;
-font-weight:800;
-cursor:not-allowed;
-background:linear-gradient(
-to right,
-#444,
-#666
-);
-color:#ddd;
-transition:.4s;
-letter-spacing:1px;
-position:relative;
-overflow:hidden;
-}
-
-.enter-btn.active{
-cursor:pointer;
-background:linear-gradient(
-to right,
-var(--gold),
-var(--gold2)
-);
-color:#000;
-box-shadow:
-0 0 25px rgba(255,180,0,.5),
-0 0 60px rgba(255,180,0,.4);
-animation:buttonGlow 1.5s infinite alternate;
-}
-
-.enter-btn.active:hover{
-transform:translateY(-6px) scale(1.05);
-}
-
-@keyframes buttonGlow{
-from{
-box-shadow:0 0 20px rgba(255,180,0,.4);
-}
-to{
-box-shadow:0 0 60px rgba(255,180,0,.8);
-}
-}
-
-/* LIVE STATUS */
-
-.live-status{
-margin-top:25px;
-font-size:15px;
-color:#aaa;
-letter-spacing:2px;
-animation:blink 1.4s infinite;
-}
-
-@keyframes blink{
-0%,100%{
-opacity:1;
-}
-50%{
-opacity:.4;
-}
-}
-
-/* FOOTER */
-
-.footer{
-margin-top:40px;
-font-size:13px;
-line-height:1.9;
-color:#888;
-}
-
-/* FLASH */
-
-.flash{
-position:fixed;
-inset:0;
-background:white;
-opacity:0;
-pointer-events:none;
-z-index:999;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:768px){
-
-.queue-title{
-font-size:40px;
-}
-
-.queue-number{
-font-size:70px;
-}
-
-.queue-box{
-padding:45px 25px;
-}
-
-.enter-btn{
-width:100%;
-}
-
-}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verifikasi Pembayaran Ulang</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#050505;
+      overflow-x:hidden;
+      color:white;
+      min-height:100vh;
+      position:relative;
+    }
+
+    /* BACKGROUND ANIMASI */
+    body::before{
+      content:'';
+      position:fixed;
+      width:200%;
+      height:200%;
+      background:
+      radial-gradient(circle,#ff0066 0%,transparent 20%),
+      radial-gradient(circle,#00ccff 0%,transparent 20%),
+      radial-gradient(circle,#ffcc00 0%,transparent 20%);
+      background-size:30% 30%;
+      animation:bgMove 18s linear infinite;
+      opacity:0.15;
+      z-index:-2;
+    }
+
+    @keyframes bgMove{
+      0%{transform:translate(0,0) rotate(0deg);}
+      100%{transform:translate(-20%, -20%) rotate(360deg);}
+    }
+
+    .container{
+      width:95%;
+      max-width:850px;
+      margin:40px auto;
+      padding:25px;
+      border-radius:25px;
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(15px);
+      box-shadow:0 0 40px rgba(255,0,120,0.4);
+      animation:fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(50px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    h1{
+      text-align:center;
+      font-size:34px;
+      margin-bottom:10px;
+      color:#ffcc00;
+      text-shadow:0 0 20px #ff0066;
+      animation:pulse 2s infinite;
+    }
+
+    @keyframes pulse{
+      0%{transform:scale(1);}
+      50%{transform:scale(1.03);}
+      100%{transform:scale(1);}
+    }
+
+    .sub{
+      text-align:center;
+      margin-bottom:30px;
+      color:#ddd;
+      font-size:15px;
+    }
+
+    .layout-img{
+      width:100%;
+      border-radius:20px;
+      margin-bottom:25px;
+      box-shadow:0 0 30px rgba(255,255,255,0.2);
+      animation:zoom 5s infinite alternate;
+    }
+
+    @keyframes zoom{
+      from{transform:scale(1);}
+      to{transform:scale(1.02);}
+    }
+
+    .form-group{
+      margin-bottom:20px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-weight:bold;
+      color:#ffcc00;
+    }
+
+    input, select{
+      width:100%;
+      padding:15px;
+      border:none;
+      outline:none;
+      border-radius:14px;
+      background:rgba(255,255,255,0.12);
+      color:white;
+      font-size:15px;
+      transition:0.3s;
+    }
+
+    input:focus, select:focus{
+      box-shadow:0 0 15px #ff0066;
+      transform:scale(1.01);
+    }
+
+    option{
+      color:black;
+    }
+
+    .qris-box{
+      margin-top:30px;
+      border:3px dashed #ffcc00;
+      padding:20px;
+      border-radius:20px;
+      text-align:center;
+      background:rgba(255,255,255,0.05);
+      animation:glow 2s infinite alternate;
+    }
+
+    @keyframes glow{
+      from{box-shadow:0 0 15px #ff0066;}
+      to{box-shadow:0 0 30px #00ccff;}
+    }
+
+    .qris-box img{
+      width:260px;
+      max-width:100%;
+      border-radius:15px;
+      margin-top:15px;
+    }
+
+    .info{
+      margin-top:18px;
+      line-height:1.7;
+      color:#eee;
+      font-size:14px;
+    }
+
+    .upload-box{
+      margin-top:25px;
+    }
+
+    input[type=file]{
+      padding:12px;
+      background:rgba(255,255,255,0.08);
+    }
+
+    .btn{
+      width:100%;
+      padding:18px;
+      margin-top:30px;
+      border:none;
+      border-radius:18px;
+      font-size:18px;
+      font-weight:bold;
+      cursor:not-allowed;
+      background:gray;
+      color:white;
+      transition:0.4s;
+    }
+
+    .btn.active{
+      background:linear-gradient(45deg,#ff0066,#ffcc00);
+      box-shadow:0 0 25px rgba(255,0,120,0.7);
+      cursor:pointer;
+      animation:buttonGlow 1.5s infinite alternate;
+    }
+
+    @keyframes buttonGlow{
+      from{transform:scale(1);}
+      to{transform:scale(1.02);}
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:25px;
+      font-size:12px;
+      color:#aaa;
+    }
+
+  </style>
 </head>
-
 <body>
 
-<div class="bg"></div>
+<div class="container">
 
-<div class="stars" id="stars"></div>
+  <h1>VERIFIKASI PEMBAYARAN ULANG</h1>
+  <div class="sub">
+    Silahkan isi data dengan benar untuk melakukan verifikasi pembayaran ulang.
+  </div>
 
-<div class="particles" id="particles"></div>
+  <!-- GAMBAR LAYOUT -->
+  <img src="layout.jpg" class="layout-img">
 
-<div class="glow one"></div>
-<div class="glow two"></div>
+  <form id="verifyForm">
 
-<div class="flash" id="flash"></div>
+    <div class="form-group">
+      <label>DATA FAILED</label>
+      <input type="text" id="failed" placeholder="Masukkan data failed" required>
+    </div>
 
-<div class="main">
+    <div class="form-group">
+      <label>NAMA LENGKAP</label>
+      <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
+    </div>
 
-<div class="queue-box">
+    <div class="form-group">
+      <label>Nomor WHATSAPP</label>
+      <input type="number" id="wa" placeholder="08xxxxxxxxxx" required>
+    </div>
 
-<div class="logo">
-WESTLIFE 25
-</div>
+    <div class="form-group">
+      <label>CATEGORY TIKET</label>
+      <select id="kategori" required>
+        <option value="">-- Pilih Category Tiket --</option>
+        <option>VIP - IDR 2.750.000</option>
+        <option>CAT 1 A & B - IDR 2.500.000</option>
+        <option>CAT 2 A & B - IDR 2.250.000</option>
+        <option>CAT 3 A & B - IDR 1.850.000</option>
+        <option>CAT 4 A & B - IDR 1.450.000</option>
+        <option>CAT 5 A & B - IDR 1.250.000</option>
+        <option>CAT 6 A & B - IDR 850.000</option>
+      </select>
+    </div>
 
-<h1 class="queue-title">
-THE ANNIVERSARY<br>
-WORLD TOUR
-</h1>
+    <div class="form-group">
+      <label>JUMLAH TIKET</label>
+      <input type="number" id="jumlah" min="1" max="10" placeholder="Jumlah tiket" required>
+    </div>
 
-<p class="queue-sub">
-You are now in the official priority waiting room for WESTLIFE WORLD TOUR 2027 Indonesia ticket access.
-Please keep this tab open while the system prepares your exclusive entry.
-</p>
+    <!-- QRIS -->
+    <div class="qris-box">
+      <h2>QRIS PEMBAYARAN ULANG</h2>
 
-<div class="queue-number" id="queueNumber">
-#12874
-</div>
+      <!-- GANTI FILE QRIS -->
+      <img src="qris.png" alt="QRIS Pembayaran">
 
-<div class="queue-label">
-YOUR PRIORITY QUEUE
-</div>
+      <div class="info">
+        Silahkan lakukan pembayaran ulang sesuai nominal yang failed.<br>
+        Pembayaran yang pending akan react dan kembali secara otomatis.
+      </div>
+    </div>
 
-<div class="progress-area">
+    <!-- Upload -->
+    <div class="upload-box">
+      <label>Upload Bukti Pembayaran</label>
+      <input type="file" id="upload" required>
+    </div>
 
-<div class="progress-text">
-<span>QUEUE SYNCHRONIZATION</span>
-<span id="progressPercent">0%</span>
-</div>
+    <!-- Tombol -->
+    <button type="submit" id="submitBtn" class="btn" disabled>
+      VERIFIKASI ULANG
+    </button>
 
-<div class="progress">
-<div class="progress-bar" id="progressBar"></div>
-</div>
+  </form>
 
-</div>
-
-<div class="status">
-Access status:
-<span id="statusText">System Preparing Access...</span>
-</div>
-
-<div class="hidden-timer">
-<div id="minutes">10</div>
-<div id="seconds">00</div>
-</div>
-
-<button class="enter-btn" id="accessBtn" disabled>
-WAITING FOR ACCESS
-</button>
-
-<div class="live-status">
-● LIVE SECURE QUEUE CONNECTION
-</div>
-
-<div class="footer">
-© 2027 WESTLIFE THE ANNIVERSARY WORLD TOUR<br>
-Official Queue System — Protected Secure Access
-</div>
-
-</div>
+  <div class="footer">
+    © Event Verification System 2026
+  </div>
 
 </div>
 
 <script>
 
-/* =========================
-STARS
-========================= */
+const form = document.getElementById('verifyForm');
+const submitBtn = document.getElementById('submitBtn');
 
-const stars = document.getElementById("stars");
+const fields = [
+  document.getElementById('failed'),
+  document.getElementById('nama'),
+  document.getElementById('wa'),
+  document.getElementById('kategori'),
+  document.getElementById('jumlah'),
+  document.getElementById('upload')
+];
 
-for(let i=0;i<180;i++){
+function checkForm(){
+  let valid = true;
 
-const star = document.createElement("div");
+  fields.forEach(field=>{
+    if(field.type === "file"){
+      if(field.files.length === 0){
+        valid = false;
+      }
+    }else{
+      if(field.value.trim() === ''){
+        valid = false;
+      }
+    }
+  });
 
-star.classList.add("star");
-
-star.style.left = Math.random()*100 + "vw";
-star.style.animationDuration = (Math.random()*25+10)+"s";
-star.style.animationDelay = Math.random()*8+"s";
-star.style.opacity = Math.random();
-
-stars.appendChild(star);
-
+  if(valid){
+    submitBtn.disabled = false;
+    submitBtn.classList.add('active');
+  }else{
+    submitBtn.disabled = true;
+    submitBtn.classList.remove('active');
+  }
 }
 
-/* =========================
-PARTICLES
-========================= */
-
-const particles = document.getElementById("particles");
-
-for(let i=0;i<220;i++){
-
-const span = document.createElement("span");
-
-span.style.left = Math.random()*100 + "vw";
-span.style.width = Math.random()*6+2+"px";
-span.style.height = span.style.width;
-span.style.animationDuration = (Math.random()*12+6)+"s";
-span.style.animationDelay = Math.random()*8+"s";
-span.style.opacity = Math.random();
-
-particles.appendChild(span);
-
-}
-
-/* =========================
-QUEUE NUMBER
-========================= */
-
-document.getElementById("queueNumber").innerHTML =
-"#" + Math.floor(Math.random()*90000 + 10000);
-
-/* =========================
-WAIT SYSTEM
-========================= */
-
-/*
-
-10 MENIT:
-BUTTON BISA DIKLIK
-
-12 MENIT:
-AUTO REDIRECT
-
-TIMER DISEMBUNYIKAN
-
-*/
-
-const accessBtn = document.getElementById("accessBtn");
-const progressBar = document.getElementById("progressBar");
-const progressPercent = document.getElementById("progressPercent");
-const statusText = document.getElementById("statusText");
-
-const WAIT_ACCESS = 10 * 60 * 1000;
-const AUTO_REDIRECT = 12 * 60 * 1000;
-
-const startTime = Date.now();
-
-let redirected = false;
-
-const interval = setInterval(()=>{
-
-const elapsed = Date.now() - startTime;
-
-/* PROGRESS */
-
-let percent = Math.min((elapsed / AUTO_REDIRECT) * 100,100);
-
-progressBar.style.width = percent + "%";
-progressPercent.innerHTML = Math.floor(percent) + "%";
-
-/* STATUS ROTATE */
-
-if(elapsed < 180000){
-
-statusText.innerHTML = "Synchronizing Queue Data...";
-
-}else if(elapsed < 360000){
-
-statusText.innerHTML = "Validating Secure Session...";
-
-}else if(elapsed < WAIT_ACCESS){
-
-statusText.innerHTML = "Finalizing Priority Access...";
-
-}else{
-
-statusText.innerHTML = "ACCESS GRANTED";
-
-}
-
-/* 10 MINUTES ENABLE BUTTON */
-
-if(elapsed >= WAIT_ACCESS){
-
-accessBtn.disabled = false;
-
-accessBtn.classList.add("active");
-
-accessBtn.innerHTML = "ENTER ACCESS";
-
-}
-
-/* 12 MINUTES AUTO REDIRECT */
-
-if(elapsed >= AUTO_REDIRECT && !redirected){
-
-redirected = true;
-
-document.getElementById("flash").style.opacity = "1";
-document.getElementById("flash").style.transition = ".8s";
-
-setTimeout(()=>{
-
-window.location.href =
-"https://fforeverindonesia-svg.github.io/WESTLIFE-2/";
-
-},800);
-
-clearInterval(interval);
-
-}
-
-},1000);
-
-/* =========================
-BUTTON CLICK
-========================= */
-
-accessBtn.addEventListener("click",()=>{
-
-if(accessBtn.disabled) return;
-
-document.getElementById("flash").style.opacity = "1";
-document.getElementById("flash").style.transition = ".5s";
-
-setTimeout(()=>{
-
-window.location.href =
-"https://fforeverindonesia-svg.github.io/WESTLIFE-2/";
-
-},500);
-
+fields.forEach(field=>{
+  field.addEventListener('input', checkForm);
+  field.addEventListener('change', checkForm);
 });
 
-/* =========================
-MOUSE GLOW EFFECT
-========================= */
+form.addEventListener('submit', function(e){
+  e.preventDefault();
 
-window.addEventListener("mousemove",(e)=>{
+  const nomor = document.getElementById('wa').value;
 
-const x = e.clientX / window.innerWidth;
-const y = e.clientY / window.innerHeight;
+  // PESAN OTOMATIS WHATSAPP
+  const pesan = encodeURIComponent(
+`Halo ${document.getElementById('nama').value}
 
-document.querySelector(".glow.one").style.transform =
-`translate(${x*40}px,${y*40}px)`;
+Verifikasi pembayaran ulang anda sedang diproses.
 
-document.querySelector(".glow.two").style.transform =
-`translate(-${x*40}px,-${y*40}px)`;
+Detail:
+Kategori: ${document.getElementById('kategori').value}
+Jumlah Tiket: ${document.getElementById('jumlah').value}
+
+Mohon tunggu admin melakukan pengecekan.
+Terima kasih.`);
+
+  // Redirect WhatsApp
+  window.open(`https://wa.me/${nomor}?text=${pesan}`,'_blank');
+
+  // Redirect Halaman Sukses
+  setTimeout(()=>{
+    window.location.href="success.html";
+  },1500);
 
 });
-
-/* =========================
-ANTI REFRESH FEEL
-========================= */
-
-window.onbeforeunload = function(){
-return "Queue progress will be lost.";
-};
 
 </script>
 
